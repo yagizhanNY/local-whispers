@@ -68,7 +68,20 @@ export default function WhisperContainer({ whisper }: PageProps) {
       const data = await response.json();
       setLikes(data.count);
     };
+
+    const checkIsUserLiked = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/like/${whisper.user.id}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      setIsUserLiked(data.isExists);
+    };
+
     getLikes();
+    checkIsUserLiked();
   }, [whisper]);
 
   return (

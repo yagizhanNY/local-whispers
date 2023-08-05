@@ -20,7 +20,6 @@ const formatDate = (dateString: string) => {
 };
 
 export default function WhisperContainer({ whisper }: PageProps) {
-  const dispatch = useAppDispatch();
   const { data: session } = useSession();
   return (
     <div className="min-h-[10rem] p-2 border border-gray-500">
@@ -35,10 +34,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
           </div>
         </div>
         {session?.user?.email === whisper.user.email && (
-          // <button onClick={() => dispatch(deleteWhisper(whisper.id))}>
-          //   <MdOutlineDeleteOutline />
-          // </button>
-          <WhisperDropdownItem />
+          <WhisperDropdownItem whisperId={whisper.id} />
         )}
       </div>
       <p className="ml-16 mt-4">{whisper.text}</p>

@@ -1,6 +1,14 @@
 "use client";
 
-export default function WhisperDropdownItem() {
+import { deleteWhisper } from "@/redux/features/whispers-slice";
+import { useAppDispatch } from "@/redux/hooks";
+
+type PageProps = {
+  whisperId: string;
+};
+
+export default function WhisperDropdownItem({ whisperId }: PageProps) {
+  const dispatch = useAppDispatch();
   return (
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs text-info">
@@ -29,7 +37,10 @@ export default function WhisperDropdownItem() {
         <div className="card-body">
           <ul className="flex flex-col">
             <li>
-              <button className="flex text-sm items-center gap-2 text-red-700">
+              <button
+                onClick={() => dispatch(deleteWhisper(whisperId))}
+                className="flex text-sm items-center gap-2 text-red-700"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-trash"

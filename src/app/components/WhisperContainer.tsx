@@ -71,12 +71,13 @@ export default function WhisperContainer({ whisper }: PageProps) {
 
     const checkIsUserLiked = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/like/${whisper.user.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/like/${whisper.user.id}?whisperId=${whisper.id}`,
         {
           method: "GET",
         }
       );
       const data = await response.json();
+      console.log(data);
       setIsUserLiked(data.isExists);
     };
 

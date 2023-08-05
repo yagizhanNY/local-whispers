@@ -6,9 +6,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const userId = params.id;
+  const whisperId = req.nextUrl.searchParams.get("whisperId");
   const like = await prisma.like.findFirst({
     where: {
       userId: userId,
+      whisperId: whisperId!,
     },
   });
   if (like) {

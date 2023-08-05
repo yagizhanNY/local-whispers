@@ -5,6 +5,7 @@ import WhisperImage from "./WhisperImage";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { deleteWhisper } from "@/redux/features/whispers-slice";
 import { useSession } from "next-auth/react";
+import WhisperDropdownItem from "./WhisperDropdownItem";
 
 type PageProps = {
   whisper: any;
@@ -22,7 +23,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
   return (
-    <div className="min-h-[10rem] p-2 border">
+    <div className="min-h-[10rem] p-2 border border-gray-500">
       <div className="flex justify-between">
         <div className="flex items-center gap-8">
           <WhisperImage image={whisper.user?.image} />
@@ -34,9 +35,10 @@ export default function WhisperContainer({ whisper }: PageProps) {
           </div>
         </div>
         {session?.user?.email === whisper.user.email && (
-          <button onClick={() => dispatch(deleteWhisper(whisper.id))}>
-            <MdOutlineDeleteOutline />
-          </button>
+          // <button onClick={() => dispatch(deleteWhisper(whisper.id))}>
+          //   <MdOutlineDeleteOutline />
+          // </button>
+          <WhisperDropdownItem />
         )}
       </div>
       <p className="ml-16 mt-4">{whisper.text}</p>

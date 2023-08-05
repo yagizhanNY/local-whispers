@@ -7,7 +7,7 @@ export default async function WhispForm() {
 
   if (session?.user === undefined) return;
   return (
-    <form className="flex flex-col gap-2 border-b p-2 mt-5 border">
+    <form className="flex flex-col gap-2 p-2 mt-5 border border-gray-500">
       <WhispFormInput session={session} />
     </form>
   );

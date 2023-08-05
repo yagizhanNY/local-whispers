@@ -48,7 +48,7 @@ export default function WhispFormInput({ session }: PageProps) {
         <textarea
           ref={inputRef}
           style={{ height: 0 }}
-          className="w-full flex-grow resize-none overflow-hidden p-4 text-lg outline-none"
+          className="w-full flex-grow resize-none overflow-hidden bg-transparent p-4 text-lg outline-none"
           placeholder="What's happenning?"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -63,7 +63,7 @@ export default function WhispFormInput({ session }: PageProps) {
             })
           );
         }}
-        className="self-end rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-400"
+        className="self-end btn btn-sm btn-primary"
       >
         Whisp
       </button>

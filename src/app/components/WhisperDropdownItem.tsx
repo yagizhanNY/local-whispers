@@ -18,11 +18,11 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
           width="24"
           height="24"
           viewBox="0 0 24 24"
-          stroke-width="2"
+          strokeWidth="2"
           stroke="currentColor"
           fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
           <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
@@ -32,7 +32,7 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
       </label>
       <div
         tabIndex={0}
-        className="card compact dropdown-content z-[1] shadow rounded-box border border-gray-400 bg-gray-900"
+        className="card compact dropdown-content z-[1] shadow rounded-box border border-gray-400 bg-base-100"
       >
         <div className="card-body">
           <ul className="flex flex-col">
@@ -47,11 +47,11 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  stroke-width="2"
+                  strokeWidth="2"
                   stroke="currentColor"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M4 7l16 0"></path>

@@ -28,7 +28,16 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(addedWhisper);
+  const currentWhisper = await prisma.whisper.findFirst({
+    where: {
+      id: addedWhisper.id,
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return NextResponse.json(currentWhisper);
 }
 
 export async function DELETE(req: NextRequest) {

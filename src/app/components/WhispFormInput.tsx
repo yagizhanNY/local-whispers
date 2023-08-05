@@ -62,6 +62,7 @@ export default function WhispFormInput({ session }: PageProps) {
               email: session?.user?.email!,
             })
           );
+          setText("");
         }}
         className="self-end btn btn-sm btn-primary"
       >

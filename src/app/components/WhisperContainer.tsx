@@ -123,7 +123,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
   return (
     <div className="min-h-[10rem] p-2 border border-gray-500">
       <div className="flex justify-between">
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4">
           <WhisperImage image={whisper.user?.image} />
           <div className="flex flex-col">
             <h1 className="font-bold text-sm">{whisper.user?.name}</h1>
@@ -139,7 +139,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
       <div className="flex flex-col w-full gap-4">
         <p
           dangerouslySetInnerHTML={{ __html: urlify(whisper.text) }}
-          className="ml-16 mt-4 [&>a]:text-blue-600 [&>a]:underline"
+          className="ml-4 mt-4 [&>a]:text-blue-600 [&>a]:underline"
         ></p>
         {youtubeLinks.map((link) => (
           <div
@@ -164,7 +164,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
             <button onClick={() => handleLikeClick()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-heart"
+                className="icon icon-tabler icon-tabler-heart text-red-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -183,7 +183,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
             <button onClick={() => handleUnlikeClick()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-heart-filled"
+                className="icon icon-tabler icon-tabler-heart-filled text-red-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"

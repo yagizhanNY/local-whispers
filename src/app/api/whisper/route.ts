@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
     data: {
       text: whisperRequest.content,
       userId: user?.id!,
+      mediaUrl: whisperRequest.mediaUrl!,
     },
   });
 

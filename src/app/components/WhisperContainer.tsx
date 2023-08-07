@@ -4,6 +4,7 @@ import WhisperImage from "./WhisperImage";
 import { useSession } from "next-auth/react";
 import WhisperDropdownItem from "./WhisperDropdownItem";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type PageProps = {
   whisper: any;
@@ -77,7 +78,6 @@ export default function WhisperContainer({ whisper }: PageProps) {
         }
       );
       const data = await response.json();
-      console.log(data);
       setIsUserLiked(data.isExists);
     };
 
@@ -101,7 +101,18 @@ export default function WhisperContainer({ whisper }: PageProps) {
           <WhisperDropdownItem whisperId={whisper.id} />
         )}
       </div>
-      <p className="ml-16 mt-4">{whisper.text}</p>
+      <div className="flex flex-col w-full gap-4">
+        <p className="ml-16 mt-4">{whisper.text}</p>
+        {whisper.mediaUrl && whisper.mediaUrl !== "" && (
+          <Image
+            width={256}
+            height={256}
+            src={whisper.mediaUrl}
+            alt="media"
+            className="ml-16 rounded-md"
+          ></Image>
+        )}
+      </div>
       <div className="flex justify-end m-2">
         <div className="flex items-center gap-1">
           {isUserLiked === false && (
@@ -140,7 +151,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path
                   d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
-                  stroke-width="0"
+                  strokeWidth="0"
                   fill="currentColor"
                 ></path>
               </svg>

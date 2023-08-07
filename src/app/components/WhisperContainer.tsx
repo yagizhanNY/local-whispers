@@ -109,7 +109,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
             height={256}
             src={whisper.mediaUrl}
             alt="media"
-            className="ml-16 rounded-md"
+            className="mx-auto rounded-md"
           ></Image>
         )}
       </div>

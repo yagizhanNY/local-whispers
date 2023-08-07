@@ -1,6 +1,8 @@
 import { Storage } from "@google-cloud/storage";
 
-const storage = new Storage();
+const gcKeyText = process.env.NEXT_PUBLIC_GC_KEY;
+const gcKey = JSON.parse(atob(gcKeyText!));
+const storage = new Storage(gcKey);
 const bucket = storage.bucket("local-whisper-bucket");
 
 export const uploadFile = (file: File) => {

@@ -42,6 +42,16 @@ export default function WhispFormInput({ session }: PageProps) {
     setText(inputText);
   };
 
+  const handleNotification = () => {
+    Notification.requestPermission().then((perm) => {
+      if (perm === "granted") {
+        new Notification("New Whisp has arrived!", {
+          body: `${session?.user?.name} sent a new Whisp! Check the Whisper App.`,
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     if (session?.user !== undefined) {
       updateTextAreaSize(textAreaRef.current);
@@ -124,6 +134,7 @@ export default function WhispFormInput({ session }: PageProps) {
             );
             setText("");
             dispatch(mediaSlice.actions.resetCurrentMedia());
+            handleNotification();
           }}
           className="btn btn-sm btn-primary"
         >

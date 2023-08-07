@@ -143,7 +143,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
         ></p>
         {youtubeLinks.map((link) => (
           <div
-            className="mx-auto"
+            className="mx-auto [&>iframe]:w-full [&>iframe]:h-40 lg:[&>iframe]:w-[560px] lg:[&>iframe]:h-[315px]"
             key={link}
             dangerouslySetInnerHTML={{ __html: generateIframeCode(link) }}
           />

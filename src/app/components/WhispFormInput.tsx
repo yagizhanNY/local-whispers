@@ -21,7 +21,6 @@ export default function WhispFormInput({ session }: PageProps) {
   const currentMediaUrl = useAppSelector(
     (state) => state.media.currentMediaUrl
   );
-  console.log("MEDIA URL: ", currentMediaUrl);
   const dispatch = useAppDispatch();
   const [text, setText] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>();
@@ -37,6 +36,10 @@ export default function WhispFormInput({ session }: PageProps) {
 
       dispatch(uploadMedia(formData));
     }
+  };
+
+  const handleText = (inputText: string) => {
+    setText(inputText);
   };
 
   useEffect(() => {
@@ -67,7 +70,7 @@ export default function WhispFormInput({ session }: PageProps) {
             className="w-full flex-grow resize-none overflow-hidden bg-transparent p-4 text-lg outline-none focus:border-b"
             placeholder="What's happenning?"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => handleText(e.target.value)}
           />
           {currentMediaUrl && (
             <Image

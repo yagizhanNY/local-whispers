@@ -21,9 +21,18 @@ const formatDate = (dateString: string) => {
   )}:${String(date.getMinutes()).padStart(2, "0")}`;
 };
 
+function urlify(text: string) {
+  var urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  return text.replace(urlRegex, function (url) {
+    return '<a href="' + url + '" target="_blank">' + url + "</a>";
+  });
+}
+
 export default function WhisperContainer({ whisper }: PageProps) {
   const { data: session } = useSession();
   const [likes, setLikes] = useState(0);
+  const [youtubeLinks, setYoutubeLinks] = useState([]);
   const [isUserLiked, setIsUserLiked] = useState(false);
 
   const handleLikeClick = () => {
@@ -85,6 +94,32 @@ export default function WhisperContainer({ whisper }: PageProps) {
     checkIsUserLiked();
   }, [whisper]);
 
+  const extractYoutubeLinks = () => {
+    const regex =
+      /(https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=[\w-]{11})|(https?:\/\/youtu\.be\/[\w-]{11})/g;
+    const matches = whisper.text.match(regex) || [];
+    setYoutubeLinks(matches);
+  };
+
+  const generateIframeCode = (link: string) => {
+    const videoId = extractVideoId(link);
+    if (videoId) {
+      return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+    }
+    return "";
+  };
+
+  const extractVideoId = (url: string) => {
+    const regex =
+      /(?:\?v=|\/embed\/|\/\d{11}(?=[^\d]|$)|\/v\/|\/e\/|\.be\/)([^"&?\/ ]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  };
+
+  useEffect(() => {
+    extractYoutubeLinks();
+  }, []);
+
   return (
     <div className="min-h-[10rem] p-2 border border-gray-500">
       <div className="flex justify-between">
@@ -102,7 +137,17 @@ export default function WhisperContainer({ whisper }: PageProps) {
         )}
       </div>
       <div className="flex flex-col w-full gap-4">
-        <p className="ml-16 mt-4">{whisper.text}</p>
+        <p
+          dangerouslySetInnerHTML={{ __html: urlify(whisper.text) }}
+          className="ml-16 mt-4 [&>a]:text-blue-600 [&>a]:underline"
+        ></p>
+        {youtubeLinks.map((link) => (
+          <div
+            className="mx-auto"
+            key={link}
+            dangerouslySetInnerHTML={{ __html: generateIframeCode(link) }}
+          />
+        ))}
         {whisper.mediaUrl && whisper.mediaUrl !== "" && (
           <Image
             width={256}

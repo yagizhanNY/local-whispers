@@ -78,7 +78,7 @@ export default function WhispFormInput({ session }: PageProps) {
             ref={inputRef}
             style={{ height: 0 }}
             className="w-full flex-grow resize-none overflow-hidden bg-transparent p-4 text-lg outline-none focus:border-b"
-            placeholder="What's happenning?"
+            placeholder="What's happening?"
             value={text}
             onChange={(e) => handleText(e.target.value)}
           />

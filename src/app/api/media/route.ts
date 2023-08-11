@@ -6,11 +6,15 @@ export async function POST(req: NextRequest) {
   if (formData) {
     const file = formData.get("media") as File;
     if (file) {
-      const resp = await uploadFile(formData);
+      try {
+        const resp = await uploadFile(formData);
 
-      return NextResponse.json({
-        fileName: resp,
-      });
+        return NextResponse.json({
+          fileName: resp,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     return NextResponse.json({

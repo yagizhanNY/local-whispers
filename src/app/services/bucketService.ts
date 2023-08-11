@@ -11,7 +11,9 @@ const bucket = storage.bucket("local-whisper-bucket");
 export const uploadFile = (formData: FormData) => {
   const file = formData.get("media") as File;
   const id = formData.get("id") as string;
-  const writeStream = bucket.file(id + file.name).createWriteStream();
+  const writeStream = bucket
+    .file(id + file.name)
+    .createWriteStream({ resumable: false });
   return new Promise(async (resolve, reject) => {
     const fileBuffer = await file.arrayBuffer();
     writeStream.on("error", (err) => {

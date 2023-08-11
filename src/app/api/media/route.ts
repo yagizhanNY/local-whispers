@@ -16,9 +16,6 @@ export async function POST(req: NextRequest) {
         console.log(err);
       }
     }
-
-    return NextResponse.json({
-      message: "BAD",
-    });
+    return new NextResponse("Bad Request", { status: 401 });
   }
 }

@@ -5,29 +5,13 @@ import { useSession } from "next-auth/react";
 import WhisperDropdownItem from "./WhisperDropdownItem";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { formatDate } from "../utils/dateUtils";
+import { urlify } from "../utils/urlUtils";
+import { generateIframeCode } from "../utils/youtubeUtils";
 
 type PageProps = {
   whisper: any;
 };
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-
-  return `${String(date.getDate()).padStart(2, "0")}.${String(
-    date.getMonth() + 1
-  ).padStart(2, "0")}.${date.getFullYear()} ${String(date.getHours()).padStart(
-    2,
-    "0"
-  )}:${String(date.getMinutes()).padStart(2, "0")}`;
-};
-
-function urlify(text: string) {
-  var urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-  return text.replace(urlRegex, function (url) {
-    return '<a href="' + url + '" target="_blank">' + url + "</a>";
-  });
-}
 
 export default function WhisperContainer({ whisper }: PageProps) {
   const { data: session } = useSession();
@@ -99,21 +83,6 @@ export default function WhisperContainer({ whisper }: PageProps) {
       /(https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=[\w-]{11})|(https?:\/\/youtu\.be\/[\w-]{11})/g;
     const matches = whisper.text.match(regex) || [];
     setYoutubeLinks(matches);
-  };
-
-  const generateIframeCode = (link: string) => {
-    const videoId = extractVideoId(link);
-    if (videoId) {
-      return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-    }
-    return "";
-  };
-
-  const extractVideoId = (url: string) => {
-    const regex =
-      /(?:\?v=|\/embed\/|\/\d{11}(?=[^\d]|$)|\/v\/|\/e\/|\.be\/)([^"&?\/ ]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
   };
 
   useEffect(() => {

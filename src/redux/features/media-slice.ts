@@ -1,3 +1,4 @@
+import { UploadMediaRequest } from "@/app/model/uploadMediaRequest";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
@@ -10,15 +11,15 @@ const initialState: InitialState = {
 
 export const uploadMedia = createAsyncThunk(
   "media/upload",
-  async (formData: FormData) => {
+  async (uploadMediaRequest: UploadMediaRequest) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media`, {
       method: "POST",
-      body: formData,
+      body: uploadMediaRequest.formData,
     });
     const data = await response.json();
-    const file = formData.get("media") as File;
+    console.log(data);
     return {
-      fileName: file.name,
+      fileName: data.fileName,
     };
   }
 );

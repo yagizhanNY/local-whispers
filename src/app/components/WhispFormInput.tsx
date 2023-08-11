@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addWhisperSliceFunc } from "@/redux/features/whispers-slice";
 import { mediaSlice, uploadMedia } from "@/redux/features/media-slice";
+import { UploadMediaRequest } from "../model/uploadMediaRequest";
 
 type PageProps = {
   session: Session | null;
@@ -33,8 +34,14 @@ export default function WhispFormInput({ session }: PageProps) {
     if (file) {
       let formData = new FormData();
       formData.append("media", file);
+      const newUuid = crypto.randomUUID();
+      formData.append("id", newUuid);
 
-      dispatch(uploadMedia(formData));
+      dispatch(
+        uploadMedia({
+          formData: formData,
+        } as UploadMediaRequest)
+      );
     }
   };
 

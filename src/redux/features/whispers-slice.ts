@@ -57,7 +57,6 @@ export const whispersSlice = createSlice({
 
     builder.addCase(addWhisperSliceFunc.fulfilled, (state, action) => {
       const addedWhisper = action.payload;
-      console.log(addedWhisper);
       state.value.unshift(addedWhisper);
     });
 

@@ -26,7 +26,7 @@ export default function Logout({ session }: PageProps) {
       </label>
       <div
         tabIndex={0}
-        className="card compact dropdown-content z-[1] shadow rounded-box border border-gray-400 bg-base-100 w-32"
+        className="card compact dropdown-content z-[1] shadow rounded-box border border-gray-400 bg-black w-32"
       >
         <div className="card-body">
           <ul className="flex flex-col">

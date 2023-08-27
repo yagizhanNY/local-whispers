@@ -8,6 +8,10 @@ import Image from "next/image";
 import { formatDate } from "../utils/dateUtils";
 import { urlify } from "../utils/urlUtils";
 import { generateIframeCode } from "../utils/youtubeUtils";
+import Like from "./whisper/Like";
+import Unlike from "./whisper/Unlike";
+import CommentIcon from "./whisper/CommentIcon";
+import { useRouter } from "next/navigation";
 
 type PageProps = {
   whisper: any;
@@ -18,38 +22,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
   const [likes, setLikes] = useState(0);
   const [youtubeLinks, setYoutubeLinks] = useState([]);
   const [isUserLiked, setIsUserLiked] = useState(false);
-
-  const handleLikeClick = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/like`, {
-      method: "POST",
-      body: JSON.stringify({
-        whisperId: whisper.id,
-        userId: whisper.user.id,
-        isLike: true,
-      }),
-    }).then((response) => {
-      response.json().then((data) => {
-        setLikes(data.count);
-        setIsUserLiked(true);
-      });
-    });
-  };
-
-  const handleUnlikeClick = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/like`, {
-      method: "POST",
-      body: JSON.stringify({
-        whisperId: whisper.id,
-        userId: whisper.user.id,
-        isLike: false,
-      }),
-    }).then((response) => {
-      response.json().then((data) => {
-        setLikes(data.count);
-        setIsUserLiked(false);
-      });
-    });
-  };
+  const router = useRouter();
 
   useEffect(() => {
     const getLikes = async () => {
@@ -89,8 +62,15 @@ export default function WhisperContainer({ whisper }: PageProps) {
     extractYoutubeLinks();
   }, []);
 
+  const navigateToWhisperDetails = (whisperId: string) => {
+    router.push(`/whisper-details/${whisperId}`);
+  };
+
   return (
-    <div className="min-h-[10rem] p-2 border border-gray-500">
+    <div
+      onClick={() => navigateToWhisperDetails(whisper.id)}
+      className="min-h-[10rem] p-2 border cursor-pointer border-gray-500"
+    >
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
           <WhisperImage image={whisper.user?.image} />
@@ -127,51 +107,27 @@ export default function WhisperContainer({ whisper }: PageProps) {
           ></Image>
         )}
       </div>
-      <div className="flex justify-end m-2">
-        <div className="flex items-center gap-1">
+      <div className="flex gap-4 justify-end m-2">
+        <div>
+          <CommentIcon whisper={whisper} />
+        </div>
+        <div>
           {isUserLiked === false && (
-            <button onClick={() => handleLikeClick()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-heart text-red-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
-              </svg>
-            </button>
+            <Like
+              whisper={whisper}
+              setLikes={setLikes}
+              setIsUserLiked={setIsUserLiked}
+              likes={likes}
+            ></Like>
           )}
           {isUserLiked === true && (
-            <button onClick={() => handleUnlikeClick()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-heart-filled text-red-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path
-                  d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
-                  strokeWidth="0"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </button>
+            <Unlike
+              whisper={whisper}
+              setLikes={setLikes}
+              setIsUserLiked={setIsUserLiked}
+              likes={likes}
+            ></Unlike>
           )}
-          <p className="text-sm font-light">{likes}</p>
         </div>
       </div>
     </div>

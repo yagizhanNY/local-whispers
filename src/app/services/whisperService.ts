@@ -8,6 +8,17 @@ export const getAllWhispers = async () => {
   });
 };
 
+export const getWhisperById = async (id: string) => {
+  return await prisma.whisper.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      user: true,
+    },
+  });
+};
+
 export const deleteWhisper = async (id: string) => {
   const deletedWhisper = await prisma.whisper.delete({
     where: {

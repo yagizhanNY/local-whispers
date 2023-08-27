@@ -1,14 +1,14 @@
 "use client";
 
-import { deleteWhisper } from "@/redux/features/whispers-slice";
+import { deleteWhispComment } from "@/redux/features/whisp-comment";
 import { useAppDispatch } from "@/redux/hooks";
 import { useCallback, useRef } from "react";
 
 type PageProps = {
-  whisperId: string;
+  whispCommentId: string;
 };
 
-export default function WhisperDropdownItem({ whisperId }: PageProps) {
+export default function WhispCommentDropdown({ whispCommentId }: PageProps) {
   const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLLabelElement>();
   const dropdownRefCallback = useCallback(
@@ -55,7 +55,7 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
           <ul className="flex flex-col">
             <li>
               <button
-                onClick={() => dispatch(deleteWhisper(whisperId))}
+                onClick={() => dispatch(deleteWhispComment(whispCommentId))}
                 className="flex text-sm items-center gap-2 text-red-700"
               >
                 <svg

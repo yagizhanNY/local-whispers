@@ -11,6 +11,7 @@ export default function Timeline() {
   useEffect(() => {
     dispatch(getWhispers());
   }, [dispatch]);
+
   return (
     <div>
       {whispers.map((w) => (

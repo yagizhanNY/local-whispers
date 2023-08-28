@@ -11,6 +11,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     },
     include: {
       user: true,
+      WhispComment: true,
     },
   });
 

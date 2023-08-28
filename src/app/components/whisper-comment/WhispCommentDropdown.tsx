@@ -22,6 +22,10 @@ export default function WhispCommentDropdown({ whispCommentId }: PageProps) {
     },
     []
   );
+
+  const handleDeleteClick = () => {
+    dispatch(deleteWhispComment(whispCommentId));
+  };
   return (
     <div className="dropdown dropdown-end z-10">
       <label
@@ -55,7 +59,7 @@ export default function WhispCommentDropdown({ whispCommentId }: PageProps) {
           <ul className="flex flex-col">
             <li>
               <button
-                onClick={() => dispatch(deleteWhispComment(whispCommentId))}
+                onClick={() => handleDeleteClick()}
                 className="flex text-sm items-center gap-2 text-red-700"
               >
                 <svg

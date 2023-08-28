@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addWhisperSliceFunc } from "@/redux/features/whispers-slice";
 import { mediaSlice, uploadMedia } from "@/redux/features/media-slice";
 import { UploadMediaRequest } from "../model/uploadMediaRequest";
+import Loading from "./Loading";
 
 type PageProps = {
   session: Session | null;
@@ -22,6 +23,7 @@ export default function WhispFormInput({ session }: PageProps) {
   const currentMediaUrl = useAppSelector(
     (state) => state.media.currentMediaUrl
   );
+  const mediaServiceStatus = useAppSelector((state) => state.media.status);
   const dispatch = useAppDispatch();
   const [text, setText] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>();
@@ -89,10 +91,12 @@ export default function WhispFormInput({ session }: PageProps) {
             value={text}
             onChange={(e) => handleText(e.target.value)}
           />
+          <div>{mediaServiceStatus === "loading" && <Loading />}</div>
+
           {currentMediaUrl && (
             <Image
               src={currentMediaUrl}
-              alt={""}
+              alt={"uploaded_media"}
               width={128}
               height={128}
               className="p-4"

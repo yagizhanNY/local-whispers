@@ -1,27 +1,29 @@
-import { getQuantityOfWhisperComments } from "@/app/services/whisperCommentsService";
-import { Whisper } from "@prisma/client";
+"use client";
 import { useEffect, useState } from "react";
 
 interface PageProps {
-  whisper: Whisper;
+  whisper: any;
 }
 
 export default function CommentIcon({ whisper }: PageProps) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const getCount = async () => {
+    const getQuantity = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/whisper-comment/count?id=${whisper.id}`,
         {
           method: "GET",
         }
       );
-      const countFromDb = (await response.json()) as any;
-      setCount(countFromDb.count);
+
+      const countItem = await response.json();
+
+      setCount(countItem.count);
     };
-    getCount();
-  }, []);
+
+    getQuantity();
+  }, [whisper.id]);
   return (
     <div className="flex gap-1">
       <svg

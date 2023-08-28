@@ -3,10 +3,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   currentMediaUrl: string | undefined;
+  status: string;
 };
 
 const initialState: InitialState = {
   currentMediaUrl: undefined,
+  status: "",
 } as InitialState;
 
 export const uploadMedia = createAsyncThunk(
@@ -34,8 +36,12 @@ export const mediaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(uploadMedia.fulfilled, (state, action) => {
+      state.status = "succeeded";
       state.currentMediaUrl = `https://storage.googleapis.com/local-whisper-bucket/${action.payload.fileName}`;
-      console.log("STATE: ", state.currentMediaUrl);
+    });
+
+    builder.addCase(uploadMedia.pending, (state, action) => {
+      state.status = "loading";
     });
   },
 });

@@ -22,6 +22,11 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
     },
     []
   );
+
+  const handleDeleteClick = (e: any) => {
+    e.stopPropagation();
+    dispatch(deleteWhisper(whisperId));
+  };
   return (
     <div className="dropdown dropdown-end z-10">
       <label
@@ -55,7 +60,7 @@ export default function WhisperDropdownItem({ whisperId }: PageProps) {
           <ul className="flex flex-col">
             <li>
               <button
-                onClick={() => dispatch(deleteWhisper(whisperId))}
+                onClick={handleDeleteClick}
                 className="flex text-sm items-center gap-2 text-red-700"
               >
                 <svg

@@ -69,7 +69,7 @@ export default function WhisperContainer({ whisper }: PageProps) {
   return (
     <div
       onClick={() => navigateToWhisperDetails(whisper.id)}
-      className="min-h-[10rem] p-2 border cursor-pointer border-gray-500"
+      className="min-h-[10rem] p-2 border cursor-pointer border-gray-500 hover:bg-zinc-950"
     >
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
